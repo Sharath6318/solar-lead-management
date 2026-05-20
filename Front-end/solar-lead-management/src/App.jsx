@@ -12,7 +12,8 @@ function App() {
 
         <Routes>
 
-          <Route path='' element={<AllLeads></AllLeads>}></Route>
+          <Route path='lead-list/' element={<AllLeads></AllLeads>}></Route>
+          <Route path='' element={<Leads></Leads>}></Route>
           <Route path='lead-add/' element={<Leads></Leads>}></Route>
           <Route path='dashboard/' element={<DashBoard></DashBoard>}></Route>
 

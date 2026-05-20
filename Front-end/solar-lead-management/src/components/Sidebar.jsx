@@ -28,16 +28,16 @@ function Sidebar() {
                     </div>
 
                     <div className='border p-3'>
-                        <Link to={'/lead-add'}
+                        <Link to={'/'}
                             class="sidebar-link">
                             Add Leads
                         </Link>
                     </div>
 
                     <div className='border p-3'>
-                        <Link to={'/'}
+                        <Link to={'/lead-list'}
                             class="sidebar-link">
-                            List Leads
+                            All Leads
                         </Link>
                     </div>
 
