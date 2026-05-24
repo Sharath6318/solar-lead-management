@@ -1,0 +1,9 @@
+.active{
+    background: blue;
+    font-weight: bolder;
+}
+.sidebar-link{
+    border-radius: 5px;
+    padding: 10px;
+    margin:10px 3px;
+}

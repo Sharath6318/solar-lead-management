@@ -1,10 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/sidebar'
+import { ListleadAPi } from '../services/api'
+import { Link } from 'react-router-dom'
 
 function DashBoard() {
+
+    const [leads, setLeads] = useState()
+
+    useEffect(() => { LeadDetails() }, [])
+
+    async function LeadDetails() {
+
+        let response = await ListleadAPi()
+
+        if (response.status >= 200 && response.status < 300) {
+
+            setLeads(response.data)
+
+        }
+    }
+
     return (
         <div>
-
             {/* <!-- Layout --> */}
             <div class="flex min-h-screen">
 
@@ -12,10 +29,10 @@ function DashBoard() {
                 <Sidebar></Sidebar>
 
                 {/* <!-- Main Content --> */}
-                <main class="flex-1 p-6">
+                <main class="flex-1">
 
                     {/* <!-- Header --> */}
-                    <div class="flex justify-between items-center mb-6">
+                    <div class="flex justify-between items-center mb-3  bg-white px-6 h-[70px] shadow-lg">
                         <div>
                             <h2 class="text-3xl font-bold text-gray-800">
                                 Dashboard
@@ -26,17 +43,17 @@ function DashBoard() {
                             </p>
                         </div>
 
-                        <button class="primary-btn">
+                        <Link to={'/'} className="w-[150px] p-2 bg-blue-900 rounded-md font-medium hover:text-white shadow-lg transition duration-200 ">
                             Add New Lead
-                        </button>
+                        </Link>
                     </div>
 
                     {/* <!-- Analytics Cards --> */}
-                    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4 p-5  ">
 
                         {/* <!-- Total Leads --> */}
-                        <div class="card">
-                            <p class="text-sm text-gray-500">
+                        <div className="flex flex-col w-[250px] h-[120px] items-center justify-center bg-white rounded-2xl shadow-md">
+                            <p class="text-xl text-gray-500">
                                 Total Leads
                             </p>
 
@@ -46,8 +63,8 @@ function DashBoard() {
                         </div>
 
                         {/* <!-- Won Leads --> */}
-                        <div class="card">
-                            <p class="text-sm text-gray-500">
+                        <div className="flex flex-col w-[250px] h-[120px] items-center justify-center bg-white rounded-2xl shadow-md">
+                            <p class="text-xl text-gray-500">
                                 Won Leads
                             </p>
 
@@ -57,8 +74,8 @@ function DashBoard() {
                         </div>
 
                         {/* <!-- Lost Leads --> */}
-                        <div class="card">
-                            <p class="text-sm text-gray-500">
+                        <div className="flex flex-col w-[250px] h-[120px] items-center justify-center bg-white rounded-2xl shadow-md">
+                            <p class="text-xl text-gray-500">
                                 Lost Leads
                             </p>
 
@@ -68,8 +85,8 @@ function DashBoard() {
                         </div>
 
                         {/* <!-- Conversion Rate --> */}
-                        <div class="card">
-                            <p class="text-sm text-gray-500">
+                        <div className="flex flex-col w-[250px] h-[120px] items-center justify-center bg-white rounded-2xl shadow-md">
+                            <p class="text-xl text-gray-500">
                                 Conversion Rate
                             </p>
 
@@ -81,66 +98,62 @@ function DashBoard() {
                     </section>
 
                     {/* <!-- Lead Status Breakdown --> */}
-                    <section class="card mb-8">
+                    <section class="card mb-5 px-5">
 
-                        <div class="mb-6">
+                        <div class="mb-4">
                             <h3 class="text-xl font-semibold text-gray-800">
                                 Lead Pipeline Status
                             </h3>
-
-                            <p class="text-gray-500 text-sm mt-1">
-                                Breakdown of all lead stages
-                            </p>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
 
-                            <div class="status-box">
-                                <h4 class="status-title">
+                            <div className="flex flex-col w-[220px] h-[100px] items-center justify-center bg-white rounded-2xl shadow-md">
+                                <h4 className="status-title text-md font-medium">
                                     New Lead
                                 </h4>
 
-                                <p class="status-count">
+                                <p class="status-count font-bold">
                                     40
                                 </p>
                             </div>
 
-                            <div class="status-box">
-                                <h4 class="status-title">
+                            <div className="flex flex-col w-[220px] h-[100px] items-center justify-center bg-white rounded-2xl shadow-md">
+                                <h4 class="status-title font-medium text-md">
                                     Contacted
                                 </h4>
 
-                                <p class="status-count">
+                                <p class="status-count font-bold">
                                     25
                                 </p>
                             </div>
 
-                            <div class="status-box">
-                                <h4 class="status-title">
+                            <div className="flex flex-col w-[220px] h-[100px] items-center justify-center bg-white rounded-2xl shadow-md">
+                                <h4 class="status-title font-medium text-md">
                                     Site Visit
                                 </h4>
 
-                                <p class="status-count">
+                                <p class="status-count font-bold">
                                     20
                                 </p>
                             </div>
 
-                            <div class="status-box">
-                                <h4 class="status-title">
+                            <div className="flex flex-col w-[220px] h-[100px] items-center justify-center bg-white rounded-2xl shadow-md">
+                                <h4 class="status-title font-medium text-md">
                                     Proposal Sent
                                 </h4>
 
-                                <p class="status-count">
+                                <p className="status-count font-bold">
                                     15
                                 </p>
                             </div>
 
-                            <div class="status-box">
-                                <h4 class="status-title">
+                            <div className="flex flex-col w-[220px] h-[100px] items-center justify-center bg-white rounded-2xl shadow-md">
+                                <h4 class="status-title font-medium text-lg">
                                     Won
                                 </h4>
 
-                                <p class="status-count text-green-600">
+                                <p class="status-count text-green-600 font-extrabold">
                                     30
                                 </p>
                             </div>
@@ -149,50 +162,46 @@ function DashBoard() {
                     </section>
 
                     {/* <!-- Recent Leads --> */}
-                    <section class="card">
+                    <section class="card px-5">
 
-                        <div class="flex justify-between items-center mb-6">
+                        <div class="flex justify-between items-center mb-4">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800">
                                     Recent Leads
                                 </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    Latest customer inquiries
-                                </p>
                             </div>
 
-                            <a href="Leads.html"
-                                class="text-green-600 font-medium hover:underline">
+                            <Link to={'/lead-list'}
+                                className="text-green-600 p-1 w-[100px] text-center font-medium bg-blue-700 text-white shadow-md rounded-md hover:underline ">
                                 View All
-                            </a>
+                            </Link>
                         </div>
 
                         {/* <!-- Table --> */}
                         <div class="overflow-x-auto">
 
-                            <table class="w-full text-left border-collapse">
+                            <table class="w-full text-center border-collapseborder border-gray-200 rounded-xl overflow-hidden">
 
                                 <thead>
                                     <tr class="bg-gray-100">
 
-                                        <th class="table-head">
+                                        <th class="table-head border border-gray-300 ">
                                             Name
                                         </th>
 
-                                        <th class="table-head">
+                                        <th class="table-head border border-gray-300 px-4 py-2">
                                             Location
                                         </th>
 
-                                        <th class="table-head">
+                                        <th class="table-head border border-gray-300 px-4 py-2">
                                             Property Type
                                         </th>
 
-                                        <th class="table-head">
+                                        <th class="table-head border border-gray-300 px-4 py-2">
                                             Status
                                         </th>
 
-                                        <th class="table-head">
+                                        <th class="table-head border border-gray-300 px-4 py-2">
                                             Date
                                         </th>
 
@@ -201,77 +210,45 @@ function DashBoard() {
 
                                 <tbody>
 
-                                    <tr class="table-row">
-                                        <td class="table-data">
-                                            Rajesh Kumar
-                                        </td>
+                                    {
+                                        leads?.slice(0, 5).map((lead, i) => {
 
-                                        <td class="table-data">
-                                            Kochi
-                                        </td>
+                                            return (
 
-                                        <td class="table-data">
-                                            Residential
-                                        </td>
+                                                <tr key={i} className="table-row">
 
-                                        <td class="table-data">
-                                            <span class="badge badge-blue">
-                                                New Lead
-                                            </span>
-                                        </td>
+                                                    <td className="table-data border border-gray-300 px-4 py-2 font-semibold text-sm uppercase">
+                                                        {lead.fullname}
+                                                    </td>
 
-                                        <td class="table-data">
-                                            20 May 2026
-                                        </td>
-                                    </tr>
+                                                    <td className="table-data border border-gray-300 px-4 py-2">
+                                                        {lead.location}
+                                                    </td>
 
-                                    <tr class="table-row">
-                                        <td class="table-data">
-                                            Priya Menon
-                                        </td>
+                                                    <td className="table-data border border-gray-300 px-4 py-2">
+                                                        {lead.property_type}
+                                                    </td>
 
-                                        <td class="table-data">
-                                            Thrissur
-                                        </td>
+                                                    <td className="table-data border border-gray-300 px-4 py-2">
 
-                                        <td class="table-data">
-                                            Commercial
-                                        </td>
+                                                        <span className="badge badge-blue">
+                                                            {lead.status}
+                                                        </span>
 
-                                        <td class="table-data">
-                                            <span class="badge badge-yellow">
-                                                Site Visit
-                                            </span>
-                                        </td>
+                                                    </td>
 
-                                        <td class="table-data">
-                                            19 May 2026
-                                        </td>
-                                    </tr>
+                                                    <td className="table-data border border-gray-300 px-4 py-2">
+                                                        20 May 2026
+                                                    </td>
 
-                                    <tr class="table-row">
-                                        <td class="table-data">
-                                            Arun Nair
-                                        </td>
+                                                </tr>
 
-                                        <td class="table-data">
-                                            Calicut
-                                        </td>
+                                            )
 
-                                        <td class="table-data">
-                                            Industrial
-                                        </td>
+                                        })
+                                    }
 
-                                        <td class="table-data">
-                                            <span class="badge badge-green">
-                                                Won
-                                            </span>
-                                        </td>
 
-                                        <td class="table-data">
-                                            18 May 2026
-                                        </td>
-                                    </tr>
 
                                 </tbody>
 

@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 function Sidebar() {
     return (
-        <div>
-            <aside class="w-64  bg-white border-r shadow-sm">
+        <div className='h-screen'>
+            <aside className="w-64 h-[100%] bg-white border-r shadow-sm">
 
                 <div class="p-6 border-b">
                     <h1 class="text-2xl font-bold text-green-600">
@@ -16,29 +16,24 @@ function Sidebar() {
                     </p>
                 </div>
 
-                <nav class="p-4 space-y-2">
+                <nav class="p-4 space-y-2 h-screen">
 
-                    <div className='border p-3'>
+                    <div className='border p-3 flex flex-col gap-1 px-3 py-3 flex-1 h-[100%]'>
 
-                        <Link to={'/dashboard'}
-                            class="sidebar-link">
+                        <NavLink to={'/dashboard'} className={({ isActive }) => isActive ? 'sidebar-link active' : 'sidebar-link'}>
                             Dashboard
-                        </Link>
+                        </NavLink>
 
-                    </div>
-
-                    <div className='border p-3'>
-                        <Link to={'/'}
-                            class="sidebar-link">
+                        <NavLink to={'/'}
+                            className={({ isActive }) => isActive ? 'sidebar-link active' : 'sidebar-link'}>
                             Add Leads
-                        </Link>
-                    </div>
-
-                    <div className='border p-3'>
-                        <Link to={'/lead-list'}
-                            class="sidebar-link">
+                        </NavLink>
+                    
+                        <NavLink to={'/lead-list'}
+                            className={({ isActive }) => isActive ? 'sidebar-link active' : 'sidebar-link'}>
                             All Leads
-                        </Link>
+                        </NavLink>
+
                     </div>
 
                 </nav>

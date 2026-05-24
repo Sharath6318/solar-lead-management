@@ -3,6 +3,7 @@ import DashBoard from './pages/DashBoard'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Leads from './pages/Leads'
 import AllLeads from './pages/AllLeads'
+import LeadEdit from './pages/LeadEdit'
 
 function App() {
   return (

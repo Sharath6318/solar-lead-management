@@ -16,21 +16,70 @@ function Leads() {
         "status": ""
     })
 
+    const [error, setErrors] = useState({})
+
+    function validateForm() {
+
+        let newErrors = {}
+
+        if (!lead.fullname.trim()) {
+            newErrors.fullname = "Full name is required"
+        }
+
+        if (!lead.phone.trim()) {
+            newErrors.phone = "Phone number is required"
+        }
+        else if (!/^[0-9]{10}$/.test(lead.phone)) {
+            newErrors.phone = "Enter valid 10 digit number"
+        }
+
+        if (!lead.email.trim()) {
+            newErrors.email = "Email is required"
+        }
+
+        if (!lead.location.trim()) {
+            newErrors.location = "Location is required"
+        }
+
+        if (!lead.property_type) {
+            newErrors.property_type = "Select property type"
+        }
+        if (!lead.system_size) {
+            newErrors.system_size = "Select system size"
+        }
+
+        if (!lead.source) {
+            newErrors.source = "Select lead source"
+        }
+
+        if (!lead.status) {
+            newErrors.status = "Select lead status"
+        }
+
+        setErrors(newErrors)
+
+        return Object.keys(newErrors).length === 0
+    }
+
     async function handleSubmit(e) {
 
         e.preventDefault()
+
+        if (!validateForm()) {
+
+            return
+
+        }
 
         try {
 
             console.log(lead)
 
-            const response = await LeadAddApi(lead)
+            let responce = await LeadAddApi(lead)
 
-            if (response.status >= 200 && response.status < 300) {
+            if (responce.status >= 200 && responce.status < 300) {
 
-                console.log(response.data)
-
-                alert("Lead Added Successfully")
+                console.log(responce.data);
 
             }
 
@@ -107,11 +156,11 @@ function Leads() {
                                         onChange={(e) => setLead({ ...lead, fullname: e.target.value })}
                                         type="text"
                                         placeholder="Enter full name"
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                                        className={`w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition ${error.fullname ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-red-500"}`}
                                     />
 
                                     <p className="text-red-500 text-sm mt-2">
-                                        Full name is required
+                                        {error.fullname}
                                     </p>
                                 </div>
 
@@ -125,12 +174,13 @@ function Leads() {
                                         onChange={(e) => setLead({ ...lead, phone: e.target.value })}
                                         type="text"
                                         placeholder="9876543210"
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                                        className={`w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition ${error.fullname ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-red-500"}`}
                                     />
 
                                     <p className="text-red-500 text-sm mt-2">
-                                        Enter valid 10-digit phone number
+                                        {error.phone}
                                     </p>
+
                                 </div>
 
                                 {/* Email */}
@@ -143,8 +193,13 @@ function Leads() {
                                         onChange={(e) => setLead({ ...lead, email: e.target.value })}
                                         type="email"
                                         placeholder="example@email.com"
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                                        className={`w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition ${error.fullname ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-red-500"}`}
                                     />
+
+
+                                    <p className="text-red-500 text-sm mt-2">
+                                        {error.email}
+                                    </p>
                                 </div>
 
                                 {/* Location */}
@@ -157,8 +212,13 @@ function Leads() {
                                         onChange={(e) => setLead({ ...lead, location: e.target.value })}
                                         type="text"
                                         placeholder="Enter city"
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                                        className={`w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition ${error.fullname ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-red-500"}`}
                                     />
+
+
+                                    <p className="text-red-500 text-sm mt-2">
+                                        {error.location}
+                                    </p>
                                 </div>
 
                                 {/* Property Type */}
@@ -167,13 +227,19 @@ function Leads() {
                                         Property Type
                                     </label>
 
-                                    <select onChange={(e) => setLead({ ...lead, property_type: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                                    <select defaultValue="" onChange={(e) => setLead({ ...lead, property_type: e.target.value })}
+                                        className={`w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition ${error.fullname ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-red-500"}`}
                                     >
-                                        <option>Residential</option>
-                                        <option>Commercial</option>
-                                        <option>Industrial</option>
+                                        <option value="" disabled>Select Property Type</option>
+                                        <option value={'residential'}>Residential</option>
+                                        <option value={'commercial'}>Commercial</option>
+                                        <option value={'industrial'}>Industrial</option>
                                     </select>
+
+                                    <p className="text-red-500 text-sm mt-2">
+                                        {error.property_type}
+                                    </p>
+
                                 </div>
 
                                 {/* System Size */}
@@ -185,8 +251,13 @@ function Leads() {
                                     <input onChange={(e) => setLead({ ...lead, system_size: e.target.value })}
                                         type="number"
                                         placeholder="5"
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                                        className={`w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition ${error.fullname ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-red-500"}`}
                                     />
+
+                                    <p className="text-red-500 text-sm mt-2">
+                                        {error.system_size}
+                                    </p>
+
                                 </div>
 
                                 {/* Source */}
@@ -195,14 +266,22 @@ function Leads() {
                                         Lead Source
                                     </label>
 
-                                    <select onChange={(e) => setLead({ ...lead, source: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                                    <select defaultValue="" onChange={(e) => setLead({ ...lead, source: e.target.value })}
+                                        className={`w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition ${error.fullname ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-red-500"}`}
                                     >
-                                        <option>Website</option>
-                                        <option>Referral</option>
-                                        <option>Walk-in</option>
-                                        <option>Social Media</option>
+
+                                        <option value='' disabled>Select the Source</option>
+                                        <option value={'website'}>Website</option>
+                                        <option value={'referral'}>Referral</option>
+                                        <option value={'walk_in'}>Walk-in</option>
+                                        <option value={'social_media'}>Social Media</option>
+
                                     </select>
+
+
+                                    <p className="text-red-500 text-sm mt-2">
+                                        {error.source}
+                                    </p>
                                 </div>
 
                                 {/* Status */}
@@ -211,16 +290,23 @@ function Leads() {
                                         Lead Status
                                     </label>
 
-                                    <select onChange={(e) => setLead({ ...lead, status: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                                    <select defaultValue="" onChange={(e) => setLead({ ...lead, status: e.target.value })}
+                                        className={`w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500 transition ${error.fullname ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-red-500"}`}
                                     >
-                                        <option>New Lead</option>
-                                        <option>Contacted</option>
-                                        <option>Site Visit Scheduled</option>
-                                        <option>Proposal Sent</option>
-                                        <option>Won</option>
-                                        <option>Lost</option>
+                                        <option value="" disabled>Select The Status</option>
+                                        <option value={'new_lead'}>New Lead</option>
+                                        <option value={'contacted'}>Contacted</option>
+                                        <option value={'site_visit'}>Site Visit Scheduled</option>
+                                        <option value={'proposal_sent'}>Proposal Sent</option>
+                                        <option value={'won'}>Won</option>
+                                        <option value={'lost'}>Lost</option>
+
                                     </select>
+
+
+                                    <p className="text-red-500 text-sm mt-2">
+                                        {error.status}
+                                    </p>
                                 </div>
 
                                 {/* Button */}
